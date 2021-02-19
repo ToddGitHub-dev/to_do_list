@@ -19,9 +19,92 @@
         <div class="container" id="cont_task">
             
         </div>
+        <script>
+            
+ "use strict"
+
+       let body = document.getElementsByTagName("body");
+       let btn_done = document.getElementById("done");
+       let task_input = document.getElementById("task_input");
+       let date_input = document.getElementById("date_input");
+       let input = document.getElementsByTagName("input");
+       let btn_delete = document.createElement("button").innerText = "Delete";
+       let btn_edit = document.createElement("button").innerText = "Edit";
+       let i = 0;
+
+       btn_done.addEventListener("click", function(){
+           addTask(date_input.value, task_input.value);
+       }, false);
+
+
+
+       // functions
+
+       let addTask = function(date, task){
+           i++
+           alert(i)
+           alert("Calling JS");
+           alert(date);
+           alert(task);
+           console.log("WTDF");
+           localStorage.setItem(date, task);
+           let cont_task = document.getElementById("cont_task");
+           cont_task.innerHTML += `<div class="card" >
+                                    <div class="card-header">
+                                        <button type="button" class="close" aria-label="Close" onclick ="deleteTask()">
+                                                 <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="card-body">
+                                       <p>${task}</p>
+                                       <p>${date}</p>
+                                       <button onclick = "editTask()">Edit</button>
+                                   </div>
+                                  </div>`;
+                                  document.querySelector("#cont_task").querySelector("div.card").id = "item" + i;
+       }
+
+       let markTask = function(data){
+           data.style.color = "#ccc";
+       }
+
+       let deleteTask = function(){
+        //let del = this.value  
+        alert("delete");
+        this.remove();
+       }
+
+       let editTask = function(){
+        //let ed = this.value
+           alert("edit");
+       }
+
+       let displayTask = function(){
+           localStorage.getItem();
+       }
+
+
+       let isEmpty = function(data){       
+           if(data.value === ""){
+               return true;
+           }else{
+               return false;
+           }
+       }
+       let hasChild = function(value){
+           if(value.innerHTML !== ""){
+               return true;
+           }else{
+               return false;
+           }
+       }
+    
+
+        </script>
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script src="to_do_list.js"></script>   
+           
     </body>
     
-</html>
+</html>       
