@@ -5,8 +5,11 @@
         <title>My To Do List</title>
     </head>
     <body>
-        <div class="container" id="cont_form">
-            <div class="card" style="width: 18rem;">
+        <div class="container col-sm-4" id="cont_form">
+            <div class="card"  style="background-color: darkgray;">
+                <div class="card-header">
+                    <p>My To Do List</p>
+                </div>
                 <div class="card-body">
                     <label>What do you want to do?</label>
                     <input type="text" class="form-control" id="task_input">
@@ -15,13 +18,77 @@
                     <input class="btn btn-primary" type="submit" value="Done" id="done">
                 </div>
             </div>
+            <div class="card" id="cont_task"  style="background-color: darkgray;">
+                
+            </div>
         </div>
-        <div class="container" id="cont_task">
+        <script>
             
-        </div>
+            "use strict"
+
+            let btn_done = document.getElementById("done");
+            let task_input = document.getElementById("task_input");
+            let date_input = document.getElementById("date_input");
+            let change = true;
+
+            btn_done.addEventListener("click", function(){
+                addTask(date_input.value, task_input.value);
+                date_input.value = "";
+                task_input.value = "";
+            }, false);
+
+
+
+            // functions
+
+            let addTask = function(date, task){
+                console.log("WTDF");
+                localStorage.setItem(date, task);
+                let cont_task = document.getElementById("cont_task");
+                cont_task.innerHTML += `<div class="card" id ="task" >
+                                            <div class="card-header">
+                                                <button type="button" class="close" aria-label="Close" onclick ="deleteTask()">
+                                                        <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="card-body" onclick = "markTask(this)"">
+                                            <p id="t">${task}</p>
+                                            <p id="d" style="font-size: 10px;font-style: italic; font-weight: bold;">${date}</p>
+                                        </div>
+                                        <button onclick = "editTask(this)" class="btn btn-secondary">Edit</button>
+
+                                        </div>`;
+            }
+
+            let markTask = function(data){
+                if(change){
+                        data.style.color = "#ccc";
+                        data.style.backgroundColor = "green";
+                        change = !change;
+                }else{
+                        data.style.color = "black";
+                        data.style.backgroundColor = "white";
+                        change = !change;
+                }
+            }
+
+            let deleteTask = function(){
+                    let task =document.getElementById('task');
+                    task.remove(); 
+            }
+
+            let editTask = function(){
+                    let task =document.getElementById('task');
+                    let data = task.getElementsByTagName("p");
+                    document.querySelector("#task_input").value=data[0].innerText;
+                    document.querySelector("#date_input").value=data[1].innerText;
+                    task.remove();
+            }
+        </script>
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script src="to_do_list.js"></script>   
+           
     </body>
     
-</html>
+</html>       
